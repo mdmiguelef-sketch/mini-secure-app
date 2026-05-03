@@ -1,7 +1,7 @@
 name: CD - Deploy to Local Runner
 on:
   push:
-    branches: [ main ]
+    branches: [ desarrollo ]
 
 jobs:
   deploy:
