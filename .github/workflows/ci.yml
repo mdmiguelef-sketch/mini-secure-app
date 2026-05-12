@@ -1,18 +1,14 @@
-name: CD - Deploy to Local Runner
+name: CI Security
 on:
   push:
     branches: [ desarrollo ]
-
 jobs:
-  deploy:
+  test:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
+      - name: Checkout código
         uses: actions/checkout@v4
-
-      - name: Build and Run Docker Container
-        run: |
-          docker stop mini-app-container || true
-          docker rm mini-app-container || true
-          docker build -t mini-secure-app .
-          docker run -d -p 3001:3001 --name mini-app-container mini-secure-app
+      - name: SAST con Semgrep
+        run: semgrep --config auto src/app.js
+      - name: Escaneo de dependencias
+        run: npm audit
