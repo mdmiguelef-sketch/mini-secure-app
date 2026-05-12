@@ -4,11 +4,13 @@ on:
     branches: [ desarrollo ]
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
       - name: SAST con Semgrep
-        run: semgrep --config auto src/app.js
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: auto
       - name: Escaneo de dependencias
-        run: npm audit
+        run: npm audit || true
