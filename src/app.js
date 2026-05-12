@@ -1,3 +1,4 @@
+const escapeHtml = require('escape-html');
 const express = require('express');
 
 const app = express();
@@ -170,11 +171,12 @@ app.get('/search', (req, res) => {
         .join('')
     : '<li>No se encontraron resultados</li>';
 
+const safeQ = escapeHtml(q);
   res.send(`
     <html>
       <head><title>Búsqueda</title></head>
       <body>
-        <h1>Resultados de búsqueda para: ${q}</h1>
+        <h1>Resultados de búsqueda para: ${safeQ}</h1>
         <ul>${items}</ul>
         <p><a href="/">Volver</a></p>
       </body>
