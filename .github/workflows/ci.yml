@@ -1,0 +1,18 @@
+name: CD - Deploy to Local Runner
+on:
+  push:
+    branches: [ desarrollo ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and Run Docker Container
+        run: |
+          docker stop mini-app-container || true
+          docker rm mini-app-container || true
+          docker build -t mini-secure-app .
+          docker run -d -p 3001:3001 --name mini-app-container mini-secure-app
